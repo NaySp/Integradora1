@@ -3,27 +3,27 @@ package model;
 public class Node {
 
 	private int value;
-	private Node left; 
-	private Node rigth;
+	private Node prev; 
+	private Node next;
 
 	public Node(int value) {
 		this.value = value;
 	}
 
-	public Node getLeft(){
-		return left;
+	public Node getPrev(){
+		return prev;
 	}
 	
-	public void setLeft(Node left){
-		this.left = left;
+	public void setPrev(Node prev){
+		this.prev = prev;
 	}
 
-	public Node getRigth() {
-		return rigth;
+	public Node getNext() {
+		return next;
 	}
 
-	public void setRigth(Node rigth) {
-		this.rigth = rigth;
+	public void setNext(Node next) {
+		this.next = next;
 	}
 
 	public int getValue() {

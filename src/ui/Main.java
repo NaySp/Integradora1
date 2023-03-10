@@ -6,11 +6,26 @@ import java.util.Scanner;
 public class Main {
 
     private Scanner reader;
-    private GameControl controller;
+    private Board tablero;
 
     public Main(){
+        
         reader = new Scanner(System.in);
-        controller = new GameControl();
+       
+        tablero=new Board();
+            tablero.addLast(new Node(0));
+            tablero.addLast(new Node(1));
+            tablero.addLast(new Node(4));
+            tablero.addLast(new Node(5));
+            tablero.addLast(new Node(6));
+            tablero.addLast(new Node(5));
+            tablero.addLast(new Node(8));
+            tablero.addLast(new Node(9));
+            tablero.addLast(new Node(10));
+
+
+
+            tablero.printBoard(3, 3);
     }
 
     public static void main(String[] args) {
@@ -72,5 +87,6 @@ public class Main {
             default -> System.out.println("Invalid Option, try again :c ");
         }
 	}
+
 
 }
