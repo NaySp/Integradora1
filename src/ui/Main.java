@@ -3,20 +3,28 @@ import model.*;
 import java.util.Scanner;
 
 
+
+
 public class Main {
 
     private Scanner reader;
-    private GameControl controller;
+    private GameController controller;
+
+
+    
 
     public Main(){
         reader = new Scanner(System.in);
-        controller = new GameControl();
+        controller = new GameController();
+
+       
     }
 
     public static void main(String[] args) {
 
         Main main = new Main();
         int option = -1;
+
         do{
 
             option = main.getOptionShowMenu();
@@ -54,9 +62,9 @@ public class Main {
 
     public void printMenu(){
     System.out.println(" ");
-    System.out.println("|s|   Sssnake and Ladd⊭rs    |=| \n");
-    System.out.print("1.Jugar. \n" +
-        "0. Salir .\n\n" +
+    System.out.println("|s|   Sssnake and Ladd⊭rs   |=| \n");
+    System.out.print("1. Jugar. \n" +
+        "0. Salir.\n\n" +
         "Opción: "); 
     }
 
@@ -65,12 +73,38 @@ public class Main {
         
         switch(option){
         
-            case 1 -> System.out.println("playing");
+            case 1 -> play();
             case 0 -> System.out.println("exit");
         
         
             default -> System.out.println("Invalid Option, try again :c ");
         }
 	}
+
+    public void play(){
+
+        int n;
+        int m;
+
+        int s;
+        int e;
+
+        System.out.println("Please type the numbers of  rows that the game will have: ");
+        n = validateInt();  
+        System.out.println("Now, type the number of column");
+        m = validateInt();
+
+        System.out.println("It´s almost over, please type the number of the sneakes u want, remember that it cannot be higher than 40% ");
+        s = validateInt();  
+        System.out.println("And, type the number of stairs (remember that it cannot be higher than 40%)");
+        e = validateInt();
+        
+
+        controller.generateBoard(n, m);
+        controller.showBoard();
+        
+        
+
+    }
 
 }
