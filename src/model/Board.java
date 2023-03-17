@@ -4,19 +4,35 @@ public class Board {
 
 	private Node head; 
 	private Node tail; 
-    private Node current;
+
+	private int rows;
+	private int cols;
+
+
+	public Board (int rows, int cols ) {
+		this.rows = rows;
+		this.cols = cols;
+		
+	}
 	
-
-	public Board() { }
-
+	public void addValue(int value) {
+		Node newNode = new Node(value);
+		addLast(newNode);
+	}
+	
 	public void addLast(Node node){
-		if(this.head == null && this.tail == null){
+		if(this.head == null){
 			this.tail = node; 
 			this.head = node; 
+			this.tail.setNext(this.head);
+			this.head.setPrevious(this.tail);
 		}
 		else{
 			this.tail.setNext(node);
+			node.setPrevious(this.tail);
 			this.tail = node; 
+			this.tail.setNext(this.head);
+			this.head.setPrevious(this.tail);
 		}
 	}
 
@@ -30,39 +46,41 @@ public class Board {
 		}
 	}
 
-	// Método de activación
-	public void print(){
-		print(this.head); 
+	public void addNodes(int totalNodes, int counter){
+        
+        Node node = new Node(counter);
+
+        if(counter <= totalNodes){
+            addLast(node);
+            addNodes(totalNodes, counter+1);
+
+        }
+
+    }
+
+	public String printBoard() {
+		return printBoard(this.tail, this.rows, this.cols, 0);
 	}
-
-	private void print(Node current){
-
-		// Casos base
-		if(this.head == null && this.tail == null){
-			System.out.println("La lista esta vacia");
-			return; 
+	
+	private String printBoard(Node current, int rows, int cols, int count) {
+		if (current == null || count == rows * cols) {
+			System.out.println(); // Agregar salto de línea al final
+			return null;
 		}
-		if(current == this.tail){
-			System.out.println(current.getValue());
-			return; 
+	
+		
+		int position = (rows * cols) - count - 1; // Calcular la posición del nodo actual
+	
+		if ((position + 1) % cols == 0) {
+			System.out.print("\n"); // Agregar salto de línea al inicio de cada fila
+			
 		}
-		System.out.println(current.getValue());
-		print(current.getNext());
-
+		System.out.print("[ " + current.getValue() + " ] ");
+	
+		return printBoard(current.getPrevious(), rows, cols, count + 1); // Avanzar al nodo anterior
 	}
-
-	public String printList(){
-		return printList(this.head, "[ "); 
-	}
-
-	private String printList(Node current, String msj){
-		if(current == null){
-			return msj + "]"; 
-		}
-
-		msj += current.getValue() + " "; 
-		return printList(current.getNext(), msj); 
-	}
+	
+	
 
 	public Node search(int goal){
 		return search(goal, this.head); 
@@ -85,16 +103,19 @@ public class Board {
 		if(goal == current.getValue()){
 			return current; 
 		}
+		if(current == this.tail && goal != this.tail.getValue()){
+			return null; 
+		}
 
 		return search(goal, current.getNext()); 
 	}
 
 	// triger de la función
 	public void delete(int goal){
-		delete(goal, null, head);
+		delete(goal, head);
 	}
 
-	private void delete(int goal, Node previous, Node current){
+	private void delete(int goal, Node current){
 		//Casos base
 		if(current == null){
 			return;
@@ -104,49 +125,49 @@ public class Board {
 			head = current.getNext();
 			return;
 		}
-		// Segundo caso borde elimina la cabeza 
+		// Segundo caso borde elimina la cola
 		if(tail.getValue() == goal && tail == current){
-			previous.setNext(null);
-			tail = previous;
+			current.getPrevious().setNext(null); //  previous.setNext(null);
+			tail = current.getPrevious(); // previous;
 			return;
 		}
 		// Caso intermedio 
 		if(current.getValue() == goal){
-			previous.setNext(current.getNext());
+			current.getPrevious().setNext(current.getNext()); // previous.setNext(current.getNext());
 			return;
 		}
 		//Llamado recursivo
-		delete(goal, current, current.getNext());
+		delete(goal, current.getNext());
 		//      ^       ^           ^
 		//      |       |           | 
 		// objetivo  previous    current
 	}
-	public void printBoard(int rows, int cols) {
-		current = head;
-        int row = 0;
-        int col = 0;
-        while (current != null) {
-            if (col == 0) {
-                for (int i = 0; i < cols; i++) {
-                    System.out.print("+---");
-                }
-                System.out.println("+");
-            }
-            System.out.printf("| %d ", current.getValue());
 
-            col++;
-            if (col == cols) {
-                System.out.println("|");
-                col = 0;
-                row++;
-                for (int i = 0; i < cols; i++) {
-                    System.out.print("+---");
-                }
-                System.out.println("+");
-            }
+	//*  */
+	private void addSnakes(){
 
-            current = current.getNext();
-        }
 	}
-}
 
+
+	//* */
+
+	//*Getters and Setters */
+
+	public int getRows() {
+		return rows;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+
+	public int getCols() {
+		return cols;
+	}
+
+	public void setCols(int cols) {
+		this.cols = cols;
+	}
+
+
+}

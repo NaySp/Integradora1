@@ -2,20 +2,21 @@ package model;
 
 public class Node {
 
+	private String sign;
 	private int value;
-	private Node prev; 
-	private Node next;
+	private Node next; 
+	private Node previous; 
 
 	public Node(int value) {
 		this.value = value;
 	}
 
-	public Node getPrev(){
-		return prev;
+	public void setValue(int value) {
+		this.value = value;
 	}
-	
-	public void setPrev(Node prev){
-		this.prev = prev;
+
+	public int getValue() {
+		return value;
 	}
 
 	public Node getNext() {
@@ -26,13 +27,12 @@ public class Node {
 		this.next = next;
 	}
 
-	public int getValue() {
-		return value;
+	public Node getPrevious() {
+		return previous;
 	}
 
-
-	public void setValue(int value) {
-		this.value = value;
+	public void setPrevious(Node previous) {
+		this.previous = previous;
 	}
 
 	@Override

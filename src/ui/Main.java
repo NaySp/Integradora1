@@ -3,35 +3,28 @@ import model.*;
 import java.util.Scanner;
 
 
+
+
 public class Main {
 
     private Scanner reader;
-    private Board tablero;
+    private GameController controller;
+
+
+    
 
     public Main(){
-        
         reader = new Scanner(System.in);
+        controller = new GameController();
+
        
-        tablero=new Board();
-            tablero.addLast(new Node(0));
-            tablero.addLast(new Node(1));
-            tablero.addLast(new Node(4));
-            tablero.addLast(new Node(5));
-            tablero.addLast(new Node(6));
-            tablero.addLast(new Node(5));
-            tablero.addLast(new Node(8));
-            tablero.addLast(new Node(9));
-            tablero.addLast(new Node(10));
-
-
-
-            tablero.printBoard(3, 3);
     }
 
     public static void main(String[] args) {
 
         Main main = new Main();
         int option = -1;
+
         do{
 
             option = main.getOptionShowMenu();
@@ -69,9 +62,9 @@ public class Main {
 
     public void printMenu(){
     System.out.println(" ");
-    System.out.println("|s|   Sssnake and Ladd⊭rs    |=| \n");
-    System.out.print("1.Jugar. \n" +
-        "0. Salir .\n\n" +
+    System.out.println("|s|   Sssnake and Ladd⊭rs   |=| \n");
+    System.out.print("1. Jugar. \n" +
+        "0. Salir.\n\n" +
         "Opción: "); 
     }
 
@@ -80,7 +73,7 @@ public class Main {
         
         switch(option){
         
-            case 1 -> System.out.println("playing");
+            case 1 -> play();
             case 0 -> System.out.println("exit");
         
         
@@ -88,5 +81,30 @@ public class Main {
         }
 	}
 
+    public void play(){
+
+        int n;
+        int m;
+
+        int s;
+        int e;
+
+        System.out.println("Please type the numbers of  rows that the game will have: ");
+        n = validateInt();  
+        System.out.println("Now, type the number of column");
+        m = validateInt();
+
+        System.out.println("It´s almost over, please type the number of the sneakes u want, remember that it cannot be higher than 40% ");
+        s = validateInt();  
+        System.out.println("And, type the number of stairs (remember that it cannot be higher than 40%)");
+        e = validateInt();
+        
+
+        controller.generateBoard(n, m);
+        controller.showBoard();
+        
+        
+
+    }
 
 }
