@@ -8,7 +8,7 @@ public class GameController{
     private Board board;
  
 
-    public static Random random = new Random();
+    public static Random random = new Random();     
 
     public GameController(){
         scanner = new Scanner(System.in);

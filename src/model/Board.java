@@ -144,10 +144,20 @@ public class Board {
 	}
 
 	//*  */
-	private void addSnakes(){
-
+	public void addSnakes(Snake snake, Node current) {
+		if (snake.getHead().getValue() == current.getValue()) {
+			current=snake.getHead(); 
+			return;
+		}
+		addSnakes(snake, current.getNext());
 	}
-
+	public void addLadders(Ladder ladder, Node current) {
+		if (ladder.getTail().getValue() == current.getValue()) {
+			current=ladder.getTail(); 
+			return;
+		}
+		addLadders(ladder, current.getNext());
+	}
 
 	//* */
 

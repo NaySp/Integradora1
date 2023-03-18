@@ -2,7 +2,6 @@ package model;
 
 public class Node {
 
-	private String sign;
 	private int value;
 	private Node next; 
 	private Node previous; 
