@@ -3,26 +3,26 @@ import java.util.Random;
 
 public class Ladder {
     public static Random random=new Random();
-    private int head;
-    private int tail;
+    private Node head;
+    private Node tail;
     public Ladder(int head,int tail){
-        this.head=head;
-        this.tail=tail;
-       
+        this.head=new Node(head);
+        this.tail=new Node(tail);
+        this.head.setNext(this.tail);
     }
-    public int getHead() {
-		return head;
-	}
+    public Node getHead() {
+        return head;
+    }
 
-	public void setHead(int head) {
-		this.head = head;
-	}
+    public void setHead(Node head) {
+        this.head = head;
+    }
 
-   public int getTail(){
+    public Node getTail(){
         return tail;
-   }
+    }
 
-	public void setTail(int tail) {
-		this.tail = tail;
-	}
+    public void setTail(Node tail) {
+        this.tail = tail;
+    }
 }
