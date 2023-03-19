@@ -8,6 +8,7 @@ public class Ladder {
     public Ladder(int head,int tail){
         this.head=head;
         this.tail=tail;
+<<<<<<< HEAD
 
     }
     public int getHead() {
@@ -19,10 +20,30 @@ public class Ladder {
     }
 
     public int getTail(){
+=======
+       
+    }
+    public int getHead() {
+		return head;
+	}
+
+	public void setHead(int head) {
+		this.head = head;
+	}
+
+   public int getTail(){
+>>>>>>> de28511 (Cambios Adds)
         return tail;
     }
 
+<<<<<<< HEAD
     public void setTail(int tail) {
         this.tail = tail;
     }
 }
+=======
+	public void setTail(int tail) {
+		this.tail = tail;
+	}
+}
+>>>>>>> de28511 (Cambios Adds)
