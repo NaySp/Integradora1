@@ -197,19 +197,6 @@ public class Board {
             addSnake(node.getNext(), head, tail, id);
         }
     }
-  
-	public void addLadder(Node node, int head, int tail, int id) {
-        if (node == null) {
-            return;
-        }
-        if (node.getValue() == head) {
-            Node endNode = getNode(head + 1, node.getNext(), tail);
-            node.setNext(endNode);
-        } else {
-            addSnake(node.getNext(), head, tail, id);
-        }
-    }
-
 
 	private Node getNode(int current, Node node, int target) {
         if (node == null) {
