@@ -5,6 +5,7 @@ public class Node {
 	private int value;
 	private Node next; 
 	private Node previous; 
+	private Snake snake;
 
 	public Node(int value) {
 		this.value = value;
