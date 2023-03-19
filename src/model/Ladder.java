@@ -8,48 +8,21 @@ public class Ladder {
     public Ladder(int head,int tail){
         this.head=head;
         this.tail=tail;
-       
+
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public Node getHead() {
+    public int getHead() {
         return head;
     }
 
-    public void setHead(Node head) {
+    public void setHead(int head) {
         this.head = head;
     }
 
-    public Node getTail(){
-=======
-=======
->>>>>>> de28511 (Cambios Adds)
-    public int getHead() {
-		return head;
-	}
-
-	public void setHead(int head) {
-		this.head = head;
-	}
-
-   public int getTail(){
-<<<<<<< HEAD
->>>>>>> de28511 (Cambios Adds)
-=======
->>>>>>> de28511 (Cambios Adds)
+    public int getTail(){
         return tail;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public void setTail(Node tail) {
+    public void setTail(int tail) {
         this.tail = tail;
     }
-=======
-=======
->>>>>>> de28511 (Cambios Adds)
-	public void setTail(int tail) {
-		this.tail = tail;
-	}
->>>>>>> de28511 (Cambios Adds)
 }

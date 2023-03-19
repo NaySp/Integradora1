@@ -173,51 +173,30 @@ public class Board {
 		// objetivo  previous    current
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	//*  */
-	public void addSnakes(Snake snake, Node current) {
-		if (snake.getHead().getValue() == current.getValue()) {
-			current=snake.getHead();
-			return;
-		}
-		addSnakes(snake, current.getNext());
-	}
-	public void addLadders(Ladder ladder, Node current) {
-		if (ladder.getTail().getValue() == current.getValue()) {
-			current=ladder.getTail();
-			return;
-		}
-		addLadders(ladder, current.getNext());
-	}
-
-
-=======
-=======
->>>>>>> de28511 (Cambios Adds)
 	public void addSnake(Node node, int head, int tail, int id) {
-        if (node == null) {
-            return;
-        }
-        if (node.getValue() == head) {
-            Node endNode = getNode(head + 1, node.getNext(), tail);
-            node.setNext(endNode);
-        } else {
-            addSnake(node.getNext(), head, tail, id);
-        }
-    }
-  
+		if (node == null) {
+			return;
+		}
+		if (node.getValue() == head) {
+			Node endNode = getNode(head + 1, node.getNext(), tail);
+			node.setNext(endNode);
+		} else {
+			addSnake(node.getNext(), head, tail, id);
+		}
+	}
+
 	public void addLadder(Node node, int head, int tail, int id) {
-        if (node == null) {
-            return;
-        }
-        if (node.getValue() == head) {
-            Node endNode = getNode(head + 1, node.getNext(), tail);
-            node.setNext(endNode);
-        } else {
-            addSnake(node.getNext(), head, tail, id);
-        }
-    }
+		if (node == null) {
+			return;
+		}
+		if (node.getValue() == head) {
+			Node endNode = getNode(head + 1, node.getNext(), tail);
+			node.setNext(endNode);
+		} else {
+			addSnake(node.getNext(), head, tail, id);
+		}
+	}
+
 	private Node getNode(int current, Node node, int target) {
         if (node == null) {
             return null;
@@ -227,10 +206,7 @@ public class Board {
         }
         return getNode(current + 1, node.getNext(), target);
     }
-<<<<<<< HEAD
->>>>>>> de28511 (Cambios Adds)
-=======
->>>>>>> de28511 (Cambios Adds)
+
 	//* */
 
 	//*Getters and Setters */
