@@ -10,6 +10,7 @@ public class Snake {
         this.tail=tail;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     public Node getHead() {
         return head;
     }
@@ -20,6 +21,8 @@ public class Snake {
 
     public Node getTail(){
 =======
+=======
+>>>>>>> de28511 (Cambios Adds)
     public int getHead() {
 		return head;
 	}
@@ -29,14 +32,20 @@ public class Snake {
 	}
 
    public int getTail(){
+<<<<<<< HEAD
+>>>>>>> de28511 (Cambios Adds)
+=======
 >>>>>>> de28511 (Cambios Adds)
         return tail;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void setTail(Node tail) {
         this.tail = tail;
 =======
+=======
+>>>>>>> de28511 (Cambios Adds)
 	public void setTail(int tail) {
 		this.tail = tail;
 	}
@@ -45,6 +54,9 @@ public class Snake {
     }
     public void setId(int id){
         this.id=id;
+<<<<<<< HEAD
+>>>>>>> de28511 (Cambios Adds)
+=======
 >>>>>>> de28511 (Cambios Adds)
     }
 }

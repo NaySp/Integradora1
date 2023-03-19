@@ -174,6 +174,7 @@ public class Board {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//*  */
 	public void addSnakes(Snake snake, Node current) {
 		if (snake.getHead().getValue() == current.getValue()) {
@@ -192,6 +193,8 @@ public class Board {
 
 
 =======
+=======
+>>>>>>> de28511 (Cambios Adds)
 	public void addSnake(Node node, int head, int tail, int id) {
         if (node == null) {
             return;
@@ -224,6 +227,9 @@ public class Board {
         }
         return getNode(current + 1, node.getNext(), target);
     }
+<<<<<<< HEAD
+>>>>>>> de28511 (Cambios Adds)
+=======
 >>>>>>> de28511 (Cambios Adds)
 	//* */
 

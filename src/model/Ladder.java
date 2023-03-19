@@ -11,6 +11,7 @@ public class Ladder {
        
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     public Node getHead() {
         return head;
     }
@@ -21,6 +22,8 @@ public class Ladder {
 
     public Node getTail(){
 =======
+=======
+>>>>>>> de28511 (Cambios Adds)
     public int getHead() {
 		return head;
 	}
@@ -30,15 +33,21 @@ public class Ladder {
 	}
 
    public int getTail(){
+<<<<<<< HEAD
+>>>>>>> de28511 (Cambios Adds)
+=======
 >>>>>>> de28511 (Cambios Adds)
         return tail;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void setTail(Node tail) {
         this.tail = tail;
     }
 =======
+=======
+>>>>>>> de28511 (Cambios Adds)
 	public void setTail(int tail) {
 		this.tail = tail;
 	}
