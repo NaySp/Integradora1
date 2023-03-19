@@ -9,7 +9,6 @@ public class Ladder {
         this.head=head;
         this.tail=tail;
 
-
     }
 
     public int getHead() {
@@ -20,7 +19,9 @@ public class Ladder {
 		this.head = head;
 	}
 
+
     public int getTail(){
+
         return tail;
     }
 
@@ -28,7 +29,6 @@ public class Ladder {
     public void setTail(int tail) {
         this.tail = tail;
     }
-
 
 
 }

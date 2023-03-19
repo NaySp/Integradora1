@@ -15,18 +15,15 @@ public class Snake {
         this.head = head;
     }
 
-    public int getHead() {
-		return head;
+
+
+   public int getTail(){
+        return tail;
+   }
+
+	public void setTail(int tail) {
+		this.tail = tail;
 	}
-
-
-
-
-
-
-    public void setTail(int tail) {
-        this.tail = tail;
-    }
 
     public int getId(){
         return id;
