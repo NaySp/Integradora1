@@ -3,13 +3,14 @@ import java.util.Random;
 
 public class Ladder {
     public static Random random=new Random();
-    private Node head;
-    private Node tail;
+    private int head;
+    private int tail;
     public Ladder(int head,int tail){
-        this.head=new Node(head);
-        this.tail=new Node(tail);
-        this.head.setNext(this.tail);
+        this.head=head;
+        this.tail=tail;
+       
     }
+<<<<<<< HEAD
     public Node getHead() {
         return head;
     }
@@ -19,10 +20,27 @@ public class Ladder {
     }
 
     public Node getTail(){
+=======
+    public int getHead() {
+		return head;
+	}
+
+	public void setHead(int head) {
+		this.head = head;
+	}
+
+   public int getTail(){
+>>>>>>> de28511 (Cambios Adds)
         return tail;
     }
 
+<<<<<<< HEAD
     public void setTail(Node tail) {
         this.tail = tail;
     }
+=======
+	public void setTail(int tail) {
+		this.tail = tail;
+	}
+>>>>>>> de28511 (Cambios Adds)
 }
