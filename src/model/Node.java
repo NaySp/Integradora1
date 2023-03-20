@@ -5,7 +5,6 @@ public class Node {
 	private int value;
 	private Node next; 
 	private Node previous; 
-	private Snake snake;
 
 	public Node(int value) {
 		this.value = value;
@@ -39,5 +38,13 @@ public class Node {
 	public String toString(){
 		return "My value is: " + value; 
 	}
+
+    public Player[] getPlayers() {
+        return null;
+    }
+
+    public Object getPlayer() {
+        return null;
+    }
 
 }

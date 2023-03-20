@@ -1,38 +1,30 @@
 package model;
+import java.util.Random;
 
 public class Snake {
-
-    private int head;
-    private int tail;
-    private int id;
+    public static Random random=new Random();
+    private Node head;
+    private Node tail;
     public Snake(int head,int tail){
-        this.head=head;
-        this.tail=tail;
-
+        this.head=new Node(head);
+        this.tail=new Node(tail);
+        this.head.setNext(this.tail);
     }
+    public Node getHead() {
+		return head;
+	}
 
-    public void setHead(int head) {
-        this.head = head;
-    }
+	public void setHead(Node head) {
+		this.head = head;
+	}
 
-
-
-   public int getTail(){
+   public Node getTail(){
         return tail;
    }
 
-	public void setTail(int tail) {
+	public void setTail(Node tail) {
 		this.tail = tail;
 	}
-
-    public int getId(){
-        return id;
-    }
-    public void setId(int id){
-        this.id=id;
-    }
-
 }
 
     
-

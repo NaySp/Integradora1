@@ -11,13 +11,13 @@ public class Main {
     private GameController controller;
 
 
-
+    
 
     public Main(){
         reader = new Scanner(System.in);
         controller = new GameController();
 
-
+       
     }
 
     public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class Main {
             main.executeOption(option);
 
         }while(option != 0);
-
+        
     }
 
     public int validateInt(){
@@ -56,30 +56,30 @@ public class Main {
         printMenu();
         option = validateInt();
         return option;
-
-
+        
+        
     }
 
     public void printMenu(){
-        System.out.println(" ");
-        System.out.println("|s|   Sssnake and Ladd⊭rs   |=| \n");
-        System.out.print("1. Jugar. \n" +
-                "0. Salir.\n\n" +
-                "Opción: ");
+    System.out.println(" ");
+    System.out.println("|s|   Sssnake and Ladd⊭rs   |=| \n");
+    System.out.print("1. Jugar. \n" +
+        "0. Salir.\n\n" +
+        "Opción: "); 
     }
 
-
+ 
     public void executeOption(int option){
-
+        
         switch(option){
-
+        
             case 1 -> play();
             case 0 -> System.out.println("exit");
-
-
+        
+        
             default -> System.out.println("Invalid Option, try again :c ");
         }
-    }
+	}
 
     public void play(){
 
@@ -90,27 +90,24 @@ public class Main {
         int e;
 
         System.out.println("Please type the numbers of  rows that the game will have: ");
-        n = validateInt();
+        n = validateInt();  
         System.out.println("Now, type the number of column");
         m = validateInt();
 
         System.out.println("It´s almost over, please type the number of the sneakes u want, remember that it cannot be higher than 40% ");
-        s = validateInt();
+        s = validateInt();  
         System.out.println("And, type the number of stairs (remember that it cannot be higher than 40%)");
         e = validateInt();
+        
 
-
-        controller.generateBoard(n, m);
+        controller.generateBoard(n, m, s, e);
         controller.showBoard();
         reader.nextLine();
         System.out.println("\nThe game will be play only wit 3 players. Just choose your turn :p");
-
-        controller.createPlayer("#");
-        controller.createPlayer("$");
-        controller.createPlayer("+");
+        controller.configPlayers();
         GameMenu();
-
-
+        
+        
     }
 
     public void GameMenu(){
@@ -120,13 +117,19 @@ public class Main {
         /** */
         System.out.print("""
                 \n-In Game-
-                Player turn:\s""" + controller.getCurrentSymbol() + "\s[" + controller.getCurrentSymbol() + """
+                Player turn:\s""" + "\s["  + """
                 ]\n1. Roll dice
                 2. Show snakes and ladders
                 Option:\s""");
         int option = reader.nextInt();
 
+        switch (option) {
+            case 1 -> System.out.println(controller.rollDice());
+            default -> System.out.println("\nInvalid input");
+        }
+
     }
 
+    
 
 }
