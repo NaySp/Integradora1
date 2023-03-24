@@ -8,9 +8,11 @@ public class Player {
     public Player(String token){
         this.token = token;
     }
+
     public int getValue(){
         return value;
     }
+    
     public void setValue(int value){
         this.value=value;
     }
@@ -22,7 +24,6 @@ public class Player {
     public void setToken(String token) {
         this.token = token;
     }
-
 
     
 }
