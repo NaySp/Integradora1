@@ -1,7 +1,7 @@
 package model;
 
 public class Player {
-    private int value;
+    private int value=0;
     private String token;
    
 
@@ -9,10 +9,10 @@ public class Player {
         this.token = token;
     }
 
-    public int getValue(){
+    public int getValueP(){
         return value;
     }
-    
+
     public void setValue(int value){
         this.value=value;
     }
@@ -24,6 +24,11 @@ public class Player {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public Player getHead() {
+        return null;
+    }
+
 
     
 }

@@ -5,38 +5,37 @@ import java.util.Random;
 
 public class GameController{
 
-    private Board board;  
+    private Board board;
+    public static Random random = new Random();   
     private Player currentPlayer;
     private Random dice;
     private int currentTurn;
-    
-  
-    boolean gameOver;
-    
+
 
     public GameController(){
     
         board = new Board(0, 0);
-
-        this.dice = new Random();
         this.currentPlayer = new Player(null); 
-        this.gameOver = false;
-        this.currentTurn = 1;
+        this.dice = new Random();
+        this.currentPlayer = null; 
+
 
     }
 
-    public void generateBoard(int rows, int cols, int snake, int ladder, Player players) {
+    public void generateBoard(int rows, int cols, int snake, int ladder) {
         this.board = new Board(rows, cols);
         addNodes(1, rows*cols);
         board.addSnakes();
         board.addLadders();
+        configPlayers();
     }
 
-    public String showBoard(){
-    
-        return board.printBoard();
+    public void showBoard(){
+        board.printBoard();
+        
     }
 
+  
 
     public void addNodes(int current, int limit){
 
@@ -87,14 +86,14 @@ public class GameController{
         }
     }
 
-    //**  */
- 
-    public boolean hasGameFinished() {
-        return gameOver;
+
+    public String getCurrentSymbol() {
+        if (currentPlayer == null) {
+            return currentPlayer.getHead().getToken();
+        } else {
+            return currentPlayer.getToken();
+        }
     }
-    //**  */
-
-
 
     
 

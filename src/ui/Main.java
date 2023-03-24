@@ -100,15 +100,11 @@ public class Main {
         e = validateInt();
         
 
-
-        System.out.println(controller.showBoard());
-        System.out.println(controller.showBoard());
-
-
+        controller.generateBoard(n, m, s, e);
+        controller.showBoard();
         reader.nextLine();
         System.out.println("\nThe game will be play only wit 3 players. Just choose your turn :p");
-        controller.generateBoard(n, m, s, e, null);
-        
+        controller.configPlayers();
         GameMenu();
         
         
@@ -121,7 +117,7 @@ public class Main {
         /** */
         System.out.print("""
                 \n-In Game-
-                Player turn:\s""" + controller.getCurrentTurn()+ "\s["   +"""
+                Player turn:\s""" + "\s["  + """
                 ]\n1. Roll dice
                 2. Show snakes and ladders
                 Option:\s""");
@@ -132,18 +128,7 @@ public class Main {
             default -> System.out.println("\nInvalid input");
         }
 
-        if(controller.hasGameFinished()) {
-            reader.nextLine();
-            
-        } else {
-            if (option == 1) {
-                controller.updateCurrentTurn();
-            }
-            GameMenu();
-        }
     }
-
-    
 
     
 
