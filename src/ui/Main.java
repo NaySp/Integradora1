@@ -113,11 +113,12 @@ public class Main {
     public void GameMenu(){
 
         controller.showBoard();
+        
 
         /** */
         System.out.print("""
                 \n-In Game-
-                Player turn:\s""" + "\s["  + """
+                Player turn:\s""" + controller.getCurrentTurn()+ "\s["  + """
                 ]\n1. Roll dice
                 2. Show snakes and ladders
                 Option:\s""");
@@ -125,9 +126,19 @@ public class Main {
 
         switch (option) {
             case 1 -> System.out.println(controller.rollDice());
+            case 2 -> controller.showSneakAndLaddere();
             default -> System.out.println("\nInvalid input");
         }
 
+        if(controller.hasGameFinished()) {
+            reader.nextLine();
+            
+        } else {
+            if (option == 1) {
+                controller.updateCurrentTurn();
+            }
+            GameMenu();
+        }
     }
 
     

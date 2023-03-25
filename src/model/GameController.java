@@ -11,6 +11,7 @@ public class GameController{
     private Random dice;
     private int currentTurn;
 
+    boolean gameOver;
 
     public GameController(){
     
@@ -33,6 +34,10 @@ public class GameController{
     public void showBoard(){
         board.printBoard();
         
+    }
+
+    public void showSneakAndLaddere(){
+        board.printSnakesAndLadders();
     }
 
   
@@ -87,13 +92,15 @@ public class GameController{
     }
 
 
-    public String getCurrentSymbol() {
-        if (currentPlayer == null) {
-            return currentPlayer.getHead().getToken();
-        } else {
-            return currentPlayer.getToken();
-        }
+
+    //**  */
+
+    public boolean hasGameFinished(){
+        return gameOver;
     }
+    
+    //**  */
+
 
     
 

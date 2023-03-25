@@ -9,6 +9,9 @@ public class Board {
 	private int rows;
 	private int cols;
 
+	private Snake snake;
+	private Ladder ladder; 
+	
 	private Player p1=new Player("*");
 	private Player p2=new Player("+");
 	private Player p3=new Player("?");
@@ -121,7 +124,6 @@ public class Board {
 		}
 		return msj;
 	}
-	
 
 
 	private void reversePrint(Node current, int cols) {
@@ -132,7 +134,40 @@ public class Board {
 		System.out.print("[ " + current.getValue() + " ] ");
 	}
 	
+	//** */
 	
+	public void printSnakesAndLadders() {
+		printSnakesAndLadders(head);
+	}
+	
+	private void printSnakesAndLadders(Node current) {
+		if (current == null) {
+			return;
+		}
+	
+		// Imprimir la serpiente o escalera en la casilla actual
+		if (current.getValue() == snake.getHead()) {
+			System.out.print("S" + snake.getId());
+		} else if (current.getValue() == ladder.getHead()) {
+			System.out.print("L" + ladder.getId());
+		} else {
+			System.out.print("   ");
+		}
+	
+		if (current.getNext() != null) {
+			// Llamada recursiva para el siguiente nodo
+			printSnakesAndLadders(current.getNext());
+		} else {
+			System.out.println(); // Agregar salto de línea al final de la fila
+		}
+	}
+	
+	
+
+
+	//**  */
+
+
 	public void configPlayers(Node current){
 		current=head;
 		p1.setValue(current.getValue());
