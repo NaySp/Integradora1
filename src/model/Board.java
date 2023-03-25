@@ -1,4 +1,5 @@
 package model;
+import java.util.Random;
 
 public class Board {
 	
@@ -8,6 +9,7 @@ public class Board {
 	
 	private int rows;
 	private int cols;
+	private Random dice;
 
 	private Player p1=new Player("*");
 	private Player p2=new Player("+");
@@ -18,6 +20,7 @@ public class Board {
 		this.tail = null;
 		this.rows = rows;
 		this.cols = cols;
+		this.dice = new Random();
 		
 	}
 	
@@ -141,6 +144,30 @@ public class Board {
 		
 
 	}
+	public void move(int turno){
+		if(turno==1){
+			int dado=rollDice();
+			int posicion=p1.getValueP();
+			int newPosition=posicion+dado;
+			
+			p1.setValue(newPosition);
+		}else if(turno==2){
+			int dado=rollDice();
+			int posicion=p2.getValueP();
+			int newPosition=posicion+dado;
+			p2.setValue(newPosition);
+		}else if(turno==3){
+			int dado=rollDice();
+			int posicion=p3.getValueP();
+			int newPosition=posicion+dado;
+			p3.setValue(newPosition);
+		}
+	}
+	
+	public int rollDice() {
+		int dado=dice.nextInt(6) + 1;
+        return dado;
+    }
 
 	
 	//*  */
