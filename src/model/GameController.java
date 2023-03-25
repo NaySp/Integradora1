@@ -6,18 +6,19 @@ import java.util.Random;
 public class GameController{
 
     private Board board;
+    private int currentTurn;
+    boolean gameOver;
     public static Random random = new Random();   
     private Player currentPlayer;
-    private Random dice;
-    private int currentTurn;
+    
+    
 
-    boolean gameOver;
 
     public GameController(){
     
         board = new Board(0, 0);
         this.currentPlayer = new Player(null); 
-        this.dice = new Random();
+        
         this.currentPlayer = null; 
 
 
@@ -36,10 +37,6 @@ public class GameController{
         
     }
 
-    public void showSneakAndLaddere(){
-        board.printSnakesAndLadders();
-    }
-
   
 
     public void addNodes(int current, int limit){
@@ -56,29 +53,6 @@ public class GameController{
 
         }              
     }
-
-    public void configPlayers(){
-        board.configPlayers(board.getHead());
-    }
-
-    public void move(Node current) {
-		int roll = rollDice();
-		moveHelper(current, roll);
-	}
-	
-	private void moveHelper(Node current, int remainingMoves) {
-		if (remainingMoves == 0 || current == null) {
-			return;
-		}
-		moveHelper(current.getNext(), remainingMoves - 1);
-	}
-	
-
-	public int rollDice() {
-        return dice.nextInt(6) + 1;
-    }
-
-
     public int getCurrentTurn() {
         return currentTurn;
     }
@@ -90,17 +64,26 @@ public class GameController{
             this.currentTurn++;
         }
     }
+    public void move(){
+        board.move(currentTurn);
+        updateCurrentTurn();
+    }
 
-
-
-    //**  */
-
+    public void configPlayers(){
+        board.configPlayers(board.getHead());
+    }
     public boolean hasGameFinished(){
         return gameOver;
     }
-    
-    //**  */
 
+    
+
+
+
+   
+
+
+   
 
     
 
