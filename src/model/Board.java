@@ -10,7 +10,8 @@ public class Board {
 	private int rows;
 	private int cols;
 	private Random dice;
-
+	private Random random;
+	
 	private Snake snake;
 	private Ladder ladder; 
 	
@@ -104,7 +105,43 @@ public class Board {
 		
 		printBoard(current.getPrevious(), rows, cols, count + 1); // Avanzar al nodo anterior
 	}
+
+	//**  */
+
+	public void printBoardSnakeAndLadder() {
+		printBoardSnakeAndLadder(this.tail, this.rows, this.cols, 0);
+	}
+
+	private void printBoardSnakeAndLadder (Node current, int rows, int cols, int count) {
+		
+		int colCount = 0;
+
+		if (current == null || count == rows * cols) {
+			System.out.println(); // Agregar salto de línea al final
+			return;
+		}
 	
+		int position = (rows * cols) - count - 1; // Calcular la posición del nodo actual
+	
+		if ((position + 1) % cols == 0) {
+			System.out.print("\n"); // Agregar salto de línea al inicio de cada fila
+			colCount = 0;
+		} 
+	
+		if (colCount % 2 != 0) {
+			reverse(current, cols, 1);
+		} else {
+			System.out.print(" [ " + printSnL(current) + "      ] ");
+			
+			
+			colCount++;
+		}
+		
+		printBoard(current.getPrevious(), rows, cols, count + 1); // Avanzar al nodo anterior
+	}
+	
+	//**  */
+
 	private void reverse(Node current, int cols, int count) {
 		if (current == null || count > cols) {
 			return;
@@ -112,6 +149,10 @@ public class Board {
 		reverse(current.getPrevious(), cols, count + 1);
 		System.out.print("[ " + current.getValue() + " ]");
 	}
+
+
+
+	//** */
 
 	public String printp(Node current){
 		String msj="";
@@ -128,50 +169,35 @@ public class Board {
 		return msj;
 	}
 
+	//**  */
 
-	private void reversePrint(Node current, int cols) {
-		if (current == null) {
-			return;
+	public String printSnL(Node current){
+		
+		String msj = "";
+
+		if(snake != null && current.getValue() == snake.getHead()){
+			msj += snake.getId();
 		}
-		reversePrint(current.getNext(), cols);
-		System.out.print("[ " + current.getValue() + " ] ");
+		if(snake != null && current.getValue() == snake.getTail()){
+			msj += snake.getId();
+		}
+		if(ladder != null && current.getValue() == ladder.getHead()){
+			msj += ladder.getId();
+		}
+		if(ladder != null && current.getValue() == ladder.getTail()){
+			msj += ladder.getId();
+		}
+
+		return msj;
 	}
-	
-	//** */
-	
-	public void printSnakesAndLadders() {
-		printSnakesAndLadders(head);
-	}
-	
-	private void printSnakesAndLadders(Node current) {
-		if (current == null) {
-			return;
-		}
-	
-		// Imprimir la serpiente o escalera en la casilla actual
-		if (current.getValue() == snake.getHead()) {
-			System.out.print("S" + snake.getId());
-		} else if (current.getValue() == ladder.getHead()) {
-			System.out.print("L" + ladder.getId());
-		} else {
-			System.out.print("   ");
-		}
-	
-		if (current.getNext() != null) {
-			// Llamada recursiva para el siguiente nodo
-			printSnakesAndLadders(current.getNext());
-		} else {
-			System.out.println(); // Agregar salto de línea al final de la fila
-		}
-	}
-	
-	
+
 
 
 	//**  */
 
 
 	public void configPlayers(Node current){
+
 		current=head;
 		p1.setValue(current.getValue());
 		p2.setValue(current.getValue());
@@ -179,6 +205,7 @@ public class Board {
 		
 
 	}
+	
 	public void move(int turno){
 		if(turno==1){
 			int dado=rollDice();
@@ -198,6 +225,7 @@ public class Board {
 			p3.setValue(newPosition);
 		}
 	}
+
 	
 	public int rollDice() {
 		int dado=dice.nextInt(6) + 1;
@@ -207,50 +235,77 @@ public class Board {
 	
 	//*  */
 
-	public void addSnakes(){
-		addSnakes(null, head);
+	public void addSnakes(int snake) {
+		Snake newSnake = new Snake(0, 0);
+		newSnake.setHead(snake);
+		addSnakes(newSnake, head);
 	}
 	
 	private void addSnakes(Snake snake, Node current) {
 		if (snake == null || current == null) {
-			return; // do nothing if either snake or current is null
-		}
-		if (snake.getHead() == 0) {
-			snake.setHead(current.getValue()); // set the head of the snake to current if it is not already set
 			return;
 		}
-		
+		if (snake.getHead() == 0) {
+			snake.setHead(current.getValue());
+			return;
+		}
 		if (snake.getHead() == current.getValue()) {
-			snake.setHead(current.getValue()); // actualizamos la cabeza de la serpiente con el nodo actual
+			snake.setHead(current.getValue());
 			return;
 		}
 		addSnakes(snake, current.getNext());
 	}
 	
-	public void addLadders(){
-		addLadders(null, head);
-	}
 
+	//**  */
+
+	public void addLadders(int ladder) {
+		Ladder newLadder = new Ladder(0, 0);
+		newLadder.setHead(ladder);
+		addLadders(newLadder, head);
+	}
+	
 	private void addLadders(Ladder ladder, Node current) {
 		if (ladder == null || current == null) {
 			return; // do nothing if either snake or current is null
 		}
 		if (ladder.getHead() == 0) {
-
 			ladder.setHead(current.getValue()); // set the head of the snake to current if it is not already set
 			return;
 		}
-		if (ladder.getTail() == current.getValue()) {
+		if (ladder.getHead() == current.getValue()) {
 			ladder.setHead(current.getValue());
 			return;
 		}
 		addLadders(ladder, current.getNext());
 	}
 
-	//** */
+	//**  */
 
-	
+	public Randoms random(){
 
+		Randoms rand=new Randoms(0,0);
+		int limit=rows*cols;
+
+		int headrandom = random.nextInt(limit);
+		int tailrandom = random.nextInt(limit);
+		
+		if(tailrandom>=headrandom){
+			random();
+		}else if(tailrandom==0){
+			random();
+		}else if(headrandom==tailrandom){
+			random();
+		}else if(headrandom+tailrandom>(limit*0.4)){
+			random();
+		}
+		else{
+			rand=new Randoms(headrandom,tailrandom);
+		
+		}
+		return rand;
+		
+	}
 
 
 	//* */
@@ -289,7 +344,15 @@ public class Board {
 		this.tail = tail;
 	}
 
+    public int getSize() {
+        return rows*cols;
+    }
+
 	
+	
+
+
+
 
 
 }

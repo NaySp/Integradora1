@@ -3,15 +3,16 @@ package model;
 import java.util.Random;
 
 
+
 public class GameController{
 
     private Board board;
     private int currentTurn;
     boolean gameOver;
-    public static Random random = new Random();   
+    public static Random random = new Random();
     private Player currentPlayer;
-    
-    
+
+
 
 
     public GameController(){
@@ -27,8 +28,8 @@ public class GameController{
     public void generateBoard(int rows, int cols, int snake, int ladder) {
         this.board = new Board(rows, cols);
         addNodes(1, rows*cols);
-        board.addSnakes();
-        board.addLadders();
+        board.addSnakes(snake);
+        board.addLadders(ladder);
         configPlayers();
     }
 
@@ -37,7 +38,11 @@ public class GameController{
         
     }
 
-  
+    public void showSnakeAndLadder(){
+        board.printBoardSnakeAndLadder();
+    }
+
+
 
     public void addNodes(int current, int limit){
 
@@ -53,6 +58,7 @@ public class GameController{
 
         }              
     }
+
     public int getCurrentTurn() {
         return currentTurn;
     }
@@ -72,19 +78,24 @@ public class GameController{
     public void configPlayers(){
         board.configPlayers(board.getHead());
     }
+
+    //** */
+ 
+
+
+    //** */
     public boolean hasGameFinished(){
         return gameOver;
     }
 
-    
+    //** */
 
 
 
-   
 
 
-   
 
-    
+
+
 
 }

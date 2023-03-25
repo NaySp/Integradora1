@@ -4,30 +4,40 @@ public class Snake {
 
     private int head;
     private int tail;
+
+
     private int id;
-    public Snake(int head,int tail){
-        this.head=head;
-        this.tail=tail;
+
+    public Snake(int head, int tail) {
+        this.head = head;
+        this.tail = tail;
+    
     }
+
     public int getHead() {
-		return head;
-	}
+        return head;
+    }
 
-	public void setHead(int head) {
-		this.head = head;
-	}
+    public void setHead(int head) {
+        this.head = head;
+    
+    }
 
-   public int getTail(){
+    public int getTail() {
         return tail;
-   }
+    }
 
-	public void setTail(int tail) {
-		this.tail = tail;
-	}
-    public int getId(){
+    public void setTail(int tail) {
+        this.tail = tail;
+     
+    }
+
+  
+    public int getId() {
         return id;
     }
-    public void setId(int id){
-        this.id=id;
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

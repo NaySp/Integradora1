@@ -116,7 +116,7 @@ public class Main {
 
         /** */
         System.out.print("""
-                \n-In Game-
+                \n- >> Playinggg << -
                 Player turn:\s""" + controller.getCurrentTurn()+ "\s["  + """
                 ]\n1. Roll dice
                 2. Show snakes and ladders
@@ -125,6 +125,7 @@ public class Main {
 
         switch (option) {
             case 1 ->controller.move();
+            case 2 -> controller.showSnakeAndLadder();
             default -> System.out.println("\nInvalid input");
         }
 
