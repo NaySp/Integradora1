@@ -11,9 +11,6 @@ public class Board {
 	private int cols;
 	private Random dice;
 	private Random random;
-	int position1=0;
-	int position2=0;
-	int position3=0;
 	
 	private Snake snake;
 	private Ladder ladder; 
@@ -28,7 +25,6 @@ public class Board {
 		this.rows = rows;
 		this.cols = cols;
 		this.dice = new Random();
-		this.random=new Random();
 		
 	}
 	
@@ -206,9 +202,6 @@ public class Board {
 		p1.setValue(current.getValue());
 		p2.setValue(current.getValue());
 		p3.setValue(current.getValue());
-		p1.setNum(1);
-		p2.setNum(2);
-		p3.setNum(3);
 		
 
 	}
@@ -216,48 +209,20 @@ public class Board {
 	public void move(int turno){
 		if(turno==1){
 			int dado=rollDice();
-			System.out.println("Niceeeee :D, You got a "+dado);
 			int posicion=p1.getValueP();
 			int newPosition=posicion+dado;
-			if(newPosition>rows*cols){
-				System.out.println("Sorry, you got a number superior to the limit");
-				return;
-			}else if(newPosition==rows*cols){
-				order(p1);
-				p1.setValue(newPosition);
-			}else{
+			
 			p1.setValue(newPosition);
-			}
 		}else if(turno==2){
 			int dado=rollDice();
-			System.out.println("Niceeeee :D, You got a "+dado);
 			int posicion=p2.getValueP();
 			int newPosition=posicion+dado;
-			if(newPosition>rows*cols){
-				System.out.println("Sorry, you got a number superior to the limit");
-				return;
-			}else if(newPosition==rows*cols){
-				order(p2);
-				p2.setValue(newPosition);
-			}else{
 			p2.setValue(newPosition);
-			}
 		}else if(turno==3){
 			int dado=rollDice();
-			System.out.println("Niceeee :D, You got a "+dado);
 			int posicion=p3.getValueP();
 			int newPosition=posicion+dado;
-			if(newPosition>rows*cols){
-				System.out.println("Sorry, you got a number superior to the limit");
-				return;
-			}else if(newPosition==rows*cols){
-				order(p3);
-				p3.setValue(newPosition);
-			}else{
 			p3.setValue(newPosition);
-			}
-
-			
 		}
 	}
 
@@ -269,36 +234,26 @@ public class Board {
 
 	
 	//*  */
-	public void addSnakes(int numSnakes) {
-		if (numSnakes == 0) {
-			return;
-		}
-		
-		addSnake(head);
-		
-		addSnakes(numSnakes - 1);
-	}
 
-	private void addSnake(Node current) {
-		
-		if (current == null) {
+	public void addSnakes(int snake) {
+		Snake newSnake = new Snake(0, 0);
+		newSnake.setHead(snake);
+		addSnakes(newSnake, head);
+	}
+	
+	private void addSnakes(Snake snake, Node current) {
+		if (snake == null || current == null) {
 			return;
 		}
-		
-		
-		Snake newSnake = new Snake(0, 0);
-		newSnake.setHead(random().getHeadRandom());
-		newSnake.setTail(random().getTailRandom());
-		
-		if (newSnake.getHead() == current.getValue()) {
-			newSnake.setHeadNode(current);
+		if (snake.getHead() == 0) {
+			snake.setHead(current.getValue());
+			return;
 		}
-		
-		if (newSnake.getTail() == current.getValue()) {
-			newSnake.setTailNode(current);
+		if (snake.getHead() == current.getValue()) {
+			snake.setHead(current.getValue());
+			return;
 		}
-		
-		addSnake(current.getNext());
+		addSnakes(snake, current.getNext());
 	}
 	
 
@@ -350,35 +305,7 @@ public class Board {
 		}
 		return rand;
 		
-		
 	}
-	public boolean gameFinished(){
-		boolean endgame=false;
-		if(p1.getValueP()==rows*cols&&p2.getValueP()==rows*cols&&p3.getValueP()==rows*cols){
-			endgame=true;
-		}
-		return endgame;
-	}
-	
-	public void order(Player win){
-		
-		if (position1==0){
-			position1=win.getNum();
-		}else if(position2==0){
-			position2=win.getNum();
-		}else if(position3==0){
-			position3=win.getNum();
-		}else{return;}
-	}
-	public String returnPositions(){
-		int[] posiciones=new int[3];
-		posiciones[0]=position1;
-		posiciones[1]=position2;
-		posiciones[2]=position3;
-		String msj="Los Ganadores en orden son:\n Primer lugar, Jugador "+posiciones[0]+"\n Segundo lugar, jugador "+posiciones[1]+"\n Tercer lugar, jugador "+posiciones[2];
-		return msj;
-	}
-	
 
 
 	//* */
@@ -420,15 +347,6 @@ public class Board {
     public int getSize() {
         return rows*cols;
     }
-	public Player getPlayer1(){
-		return p1;
-	}
-	public Player getPlayer2(){
-		return p2;
-	}
-	public Player getPlayer3(){
-		return p3;
-	}
 
 	
 	

@@ -25,4 +25,5 @@ public class Randoms {
     public void setTailRandom(int tailRandom) {
         this.tailRandom = tailRandom;
     }
+
 }
