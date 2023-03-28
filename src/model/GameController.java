@@ -85,9 +85,9 @@ public class GameController{
     public boolean hasGameFinished(){
         return board.gameFinished();
     }
-    public Player winner(){
-        return board.getWinner();
-    }
+   public String winners(){
+    return board.returnPositions();
+   }
     public void position(){
         
     }

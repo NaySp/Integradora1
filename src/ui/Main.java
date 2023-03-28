@@ -133,7 +133,7 @@ public class Main {
             reader.nextLine();
             GameMenu();
         }else if(controller.hasGameFinished()==true){
-            System.out.println("FINISH!,Congrats, the Winner is the player "+controller.winner().getNum()+" ID: "+controller.winner().getToken());
+            System.out.println("FINISHED, CONGRATS "+controller.winners());
             return;
         } 
             

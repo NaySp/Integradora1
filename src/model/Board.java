@@ -11,6 +11,9 @@ public class Board {
 	private int cols;
 	private Random dice;
 	private Random random;
+	int position1=0;
+	int position2=0;
+	int position3=0;
 	
 	private Snake snake;
 	private Ladder ladder; 
@@ -221,6 +224,7 @@ public class Board {
 				return;
 			}else if(newPosition==rows*cols){
 				order(p1);
+				p1.setValue(newPosition);
 			}else{
 			p1.setValue(newPosition);
 			}
@@ -234,6 +238,7 @@ public class Board {
 				return;
 			}else if(newPosition==rows*cols){
 				order(p2);
+				p2.setValue(newPosition);
 			}else{
 			p2.setValue(newPosition);
 			}
@@ -247,9 +252,12 @@ public class Board {
 				return;
 			}else if(newPosition==rows*cols){
 				order(p3);
+				p3.setValue(newPosition);
 			}else{
 			p3.setValue(newPosition);
 			}
+
+			
 		}
 	}
 
@@ -351,28 +359,24 @@ public class Board {
 		}
 		return endgame;
 	}
-	public Player getWinner(){
-		if(p1.getValueP()==rows*cols){
-			return p1;
-		}else if(p2.getValueP()==rows*cols){
-			return p2;
-		}else if(p3.getValueP()==rows*cols){
-			return p3;
-		}
-		return null;
-
-	}
+	
 	public void order(Player win){
-		int position1=0;
-		int position2=0;
-		int position3=0;
+		
 		if (position1==0){
 			position1=win.getNum();
 		}else if(position2==0){
 			position2=win.getNum();
 		}else if(position3==0){
 			position3=win.getNum();
-		}
+		}else{return;}
+	}
+	public String returnPositions(){
+		int[] posiciones=new int[3];
+		posiciones[0]=position1;
+		posiciones[1]=position2;
+		posiciones[2]=position3;
+		String msj="Los Ganadores en orden son:\n Primer lugar, Jugador "+posiciones[0]+"\n Segundo lugar, jugador "+posiciones[1]+"\n Tercer lugar, jugador "+posiciones[2];
+		return msj;
 	}
 	
 
