@@ -129,13 +129,16 @@ public class Main {
             default -> System.out.println("\nInvalid input");
         }
 
-        if(controller.hasGameFinished()) {
+        if(controller.hasGameFinished()==false) {
             reader.nextLine();
-            
-        } 
             GameMenu();
+        }else if(controller.hasGameFinished()==true){
+            System.out.println("FINISH!,Congrats, the Winner is the player "+controller.winner().getNum()+" ID: "+controller.winner().getToken());
+            return;
+        } 
+            
         }
-    }
+    } 
 
     
 

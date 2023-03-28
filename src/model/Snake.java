@@ -4,6 +4,8 @@ public class Snake {
 
     private int head;
     private int tail;
+    private Node headNode;
+    private Node tailNode;
 
 
     private int id;
@@ -31,6 +33,13 @@ public class Snake {
         this.tail = tail;
      
     }
+    public void setHeadNode(Node node) {
+        this.headNode = node;
+    }
+    
+    public void setTailNode(Node node) {
+        this.tailNode = node;
+    }
 
   
     public int getId() {
@@ -40,4 +49,5 @@ public class Snake {
     public void setId(int id) {
         this.id = id;
     }
+    
 }

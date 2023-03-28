@@ -25,6 +25,7 @@ public class Board {
 		this.rows = rows;
 		this.cols = cols;
 		this.dice = new Random();
+		this.random=new Random();
 		
 	}
 	
@@ -202,6 +203,9 @@ public class Board {
 		p1.setValue(current.getValue());
 		p2.setValue(current.getValue());
 		p3.setValue(current.getValue());
+		p1.setNum(1);
+		p2.setNum(2);
+		p3.setNum(3);
 		
 
 	}
@@ -209,20 +213,43 @@ public class Board {
 	public void move(int turno){
 		if(turno==1){
 			int dado=rollDice();
+			System.out.println("Niceeeee :D, You got a "+dado);
 			int posicion=p1.getValueP();
 			int newPosition=posicion+dado;
-			
+			if(newPosition>rows*cols){
+				System.out.println("Sorry, you got a number superior to the limit");
+				return;
+			}else if(newPosition==rows*cols){
+				order(p1);
+			}else{
 			p1.setValue(newPosition);
+			}
 		}else if(turno==2){
 			int dado=rollDice();
+			System.out.println("Niceeeee :D, You got a "+dado);
 			int posicion=p2.getValueP();
 			int newPosition=posicion+dado;
+			if(newPosition>rows*cols){
+				System.out.println("Sorry, you got a number superior to the limit");
+				return;
+			}else if(newPosition==rows*cols){
+				order(p2);
+			}else{
 			p2.setValue(newPosition);
+			}
 		}else if(turno==3){
 			int dado=rollDice();
+			System.out.println("Niceeee :D, You got a "+dado);
 			int posicion=p3.getValueP();
 			int newPosition=posicion+dado;
+			if(newPosition>rows*cols){
+				System.out.println("Sorry, you got a number superior to the limit");
+				return;
+			}else if(newPosition==rows*cols){
+				order(p3);
+			}else{
 			p3.setValue(newPosition);
+			}
 		}
 	}
 
@@ -234,26 +261,36 @@ public class Board {
 
 	
 	//*  */
-
-	public void addSnakes(int snake) {
-		Snake newSnake = new Snake(0, 0);
-		newSnake.setHead(snake);
-		addSnakes(newSnake, head);
+	public void addSnakes(int numSnakes) {
+		if (numSnakes == 0) {
+			return;
+		}
+		
+		addSnake(head);
+		
+		addSnakes(numSnakes - 1);
 	}
-	
-	private void addSnakes(Snake snake, Node current) {
-		if (snake == null || current == null) {
+
+	private void addSnake(Node current) {
+		
+		if (current == null) {
 			return;
 		}
-		if (snake.getHead() == 0) {
-			snake.setHead(current.getValue());
-			return;
+		
+		
+		Snake newSnake = new Snake(0, 0);
+		newSnake.setHead(random().getHeadRandom());
+		newSnake.setTail(random().getTailRandom());
+		
+		if (newSnake.getHead() == current.getValue()) {
+			newSnake.setHeadNode(current);
 		}
-		if (snake.getHead() == current.getValue()) {
-			snake.setHead(current.getValue());
-			return;
+		
+		if (newSnake.getTail() == current.getValue()) {
+			newSnake.setTailNode(current);
 		}
-		addSnakes(snake, current.getNext());
+		
+		addSnake(current.getNext());
 	}
 	
 
@@ -305,7 +342,39 @@ public class Board {
 		}
 		return rand;
 		
+		
 	}
+	public boolean gameFinished(){
+		boolean endgame=false;
+		if(p1.getValueP()==rows*cols&&p2.getValueP()==rows*cols&&p3.getValueP()==rows*cols){
+			endgame=true;
+		}
+		return endgame;
+	}
+	public Player getWinner(){
+		if(p1.getValueP()==rows*cols){
+			return p1;
+		}else if(p2.getValueP()==rows*cols){
+			return p2;
+		}else if(p3.getValueP()==rows*cols){
+			return p3;
+		}
+		return null;
+
+	}
+	public void order(Player win){
+		int position1=0;
+		int position2=0;
+		int position3=0;
+		if (position1==0){
+			position1=win.getNum();
+		}else if(position2==0){
+			position2=win.getNum();
+		}else if(position3==0){
+			position3=win.getNum();
+		}
+	}
+	
 
 
 	//* */
@@ -347,6 +416,15 @@ public class Board {
     public int getSize() {
         return rows*cols;
     }
+	public Player getPlayer1(){
+		return p1;
+	}
+	public Player getPlayer2(){
+		return p2;
+	}
+	public Player getPlayer3(){
+		return p3;
+	}
 
 	
 	

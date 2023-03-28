@@ -10,7 +10,7 @@ public class GameController{
     private int currentTurn;
     boolean gameOver;
     public static Random random = new Random();
-    private Player currentPlayer;
+    
 
 
 
@@ -18,9 +18,7 @@ public class GameController{
     public GameController(){
     
         board = new Board(0, 0);
-        this.currentPlayer = new Player(null); 
-        
-        this.currentPlayer = null; 
+         
 
 
     }
@@ -28,7 +26,7 @@ public class GameController{
     public void generateBoard(int rows, int cols, int snake, int ladder) {
         this.board = new Board(rows, cols);
         addNodes(1, rows*cols);
-        board.addSnakes(snake);
+        
         board.addLadders(ladder);
         configPlayers();
     }
@@ -85,7 +83,13 @@ public class GameController{
 
     //** */
     public boolean hasGameFinished(){
-        return gameOver;
+        return board.gameFinished();
+    }
+    public Player winner(){
+        return board.getWinner();
+    }
+    public void position(){
+        
     }
 
     //** */

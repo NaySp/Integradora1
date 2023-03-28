@@ -1,6 +1,7 @@
 package model;
 
 public class Player {
+    private int num=0;
     private int value=0;
     private String token;
    
@@ -27,6 +28,12 @@ public class Player {
 
     public Player getHead() {
         return null;
+    }
+    public int getNum(){
+        return num;
+    }
+    public void setNum(int num){
+        this.num=num;
     }
 
 
