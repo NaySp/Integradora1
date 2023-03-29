@@ -4,12 +4,14 @@ import java.util.Random;
 
 
 
+
 public class GameController{
 
     private Board board;
     private int currentTurn;
     boolean gameOver;
     public static Random random = new Random();
+
     
 
 
@@ -78,16 +80,27 @@ public class GameController{
     }
 
     //** */
- 
+
+    public void clockTime(){
+        board.clockTime();
+    }
+
+    public double scoreFromTime(){
+        return board.scoreFromTime();
+    }
+
+    public void finishTime(){
+        board.finishTime();
+    }
 
 
     //** */
     public boolean hasGameFinished(){
         return board.gameFinished();
     }
-   public String winners(){
+    public String winners(){
     return board.returnPositions();
-   }
+    }
     public void position(){
         
     }

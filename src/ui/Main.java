@@ -1,7 +1,7 @@
 package ui;
 import model.*;
 import java.util.Scanner;
-
+import java.time.LocalTime;
 
 
 
@@ -74,6 +74,8 @@ public class Main {
         switch(option){
         
             case 1 -> play();
+
+            
             case 0 -> System.out.println("exit");
         
         
@@ -103,9 +105,11 @@ public class Main {
         controller.generateBoard(n, m, s, e);
         
         reader.nextLine();
-        System.out.println("\nThe game will be play only wit 3 players. Just choose your turn :p");
+        System.out.println("\nThe game will be play only with 3 players. Just choose your turn :p");
         controller.configPlayers();
+        controller.clockTime();
         GameMenu();
+        
         
         
     }
@@ -125,7 +129,7 @@ public class Main {
         int option = reader.nextInt();
 
         switch (option) {
-            case 1 ->controller.move();
+            case 1 -> controller.move();
             case 2 -> controller.showSnakeAndLadder();
             default -> System.out.println("\nInvalid input");
         }
@@ -133,8 +137,14 @@ public class Main {
         if(controller.hasGameFinished()==false) {
             reader.nextLine();
             GameMenu();
+
         }else if(controller.hasGameFinished()==true){
-            System.out.println("\n  FINISHED, CONGRATS "+controller.winners());
+            System.out.println("\n  FINISHED, CONGRATS " + controller.winners());
+
+        
+            
+            controller.finishTime();
+
             return;
         } 
             

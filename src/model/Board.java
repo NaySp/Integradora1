@@ -1,5 +1,6 @@
 package model;
 import java.util.Random;
+import java.util.Timer;
 
 public class Board {
 	
@@ -11,16 +12,26 @@ public class Board {
 	private int cols;
 	private Random dice;
 	private Random random;
+	
 	int position1=0;
 	int position2=0;
 	int position3=0;
 	
+	double s1 = 0;
+	double s2 = 0;
+	double s3 = 0;
+
 	private Snake snake;
 	private Ladder ladder; 
 	
 	private Player p1=new Player("*");
 	private Player p2=new Player("+");
 	private Player p3=new Player("?");
+
+
+	private double seconds;
+    private boolean flag;
+    private Thread timeKeeper; 
 
 	public Board(int rows, int cols) {
 		this.head = null;
@@ -29,6 +40,7 @@ public class Board {
 		this.cols = cols;
 		this.dice = new Random();
 		this.random=new Random();
+		
 		
 	}
 	
@@ -364,22 +376,82 @@ public class Board {
 		
 		if (position1==0){
 			position1=win.getNum();
+			win.setScore(scoreFromTime());
+			s1 = win.getScore();
+
+
 		}else if(position2==0){
 			position2=win.getNum();
+			win.setScore(scoreFromTime());
+			s2 = win.getScore();
+
 		}else if(position3==0){
 			position3=win.getNum();
+			win.setScore(scoreFromTime());
+			s3 = win.getScore();
+
 		}else{return;}
 	}
+
 	public String returnPositions(){
+
 		int[] posiciones=new int[3];
+
 		posiciones[0]=position1;
 		posiciones[1]=position2;
 		posiciones[2]=position3;
-		String msj="The winners in order areee :\n\n First place, Player: "+posiciones[0]+"\n Second place, player:  "+posiciones[1]+"\n Third place, player "+posiciones[2];
+
+		double[] score = new double[3];
+		score[0] = s1;  
+		score[1] = s2;
+		score[2] = s3;
+
+		String msj="The winners in order areee :\n\n First place, Player: "+ posiciones[0]+ ", with a score of " + score[0] +"\n Second place, player:  "+posiciones[1]+ ", with a score of " + score[1] + "\n Third place, player " +posiciones[2] +", with a score of " + score[2];
 		return msj;
 	}
 	
 
+	//** */
+
+	//** Contador de tiempo*/
+    public void clockTime(){
+		
+
+        this.seconds = 600;
+        flag = true;
+        
+        timeKeeper = new Thread ( ( ) -> { //Mantiene el hilo, proceso ligero
+
+            while (flag) {
+                try {
+                    Thread.sleep(10); // contará más lento el tiempo
+                    seconds = 0.10;
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); //cuando se cumpla, será la bandera que detiene
+        
+                }
+            }
+
+        } ) ;
+
+        timeKeeper.start(); // clockTime
+
+    }
+
+    //** Calcular score a partir del tiempo */
+
+    public double scoreFromTime(){
+
+        double a = (600 - seconds ) / 6;
+        return a; 
+    }  
+
+    //**  */
+
+    public void finishTime(){
+        flag = false;
+        timeKeeper.interrupt();
+    }
 
 	//* */
 

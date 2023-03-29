@@ -1,10 +1,12 @@
 package model;
 
 public class Player {
+
     private int num=0;
     private int value=0;
     private String token;
    
+    private double score;
 
     public Player(String token){
         this.token = token;
@@ -36,6 +38,13 @@ public class Player {
         this.num=num;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 
     
 }
