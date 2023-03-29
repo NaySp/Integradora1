@@ -4,13 +4,19 @@ public class Node {
 
     private int value;
     private Player player;
+    
+    private Snake snake;
+    private Ladder ladder;
+
     private Node next;
     private Node previous;
+
 	private String msj;
 
     public Node(int value) {
         this.value = value;
 		this.msj = msj+"";
+        
     }
 
     public int getValue() {
@@ -53,8 +59,22 @@ public class Node {
         this.previous = previous;
     }
 
+    public Snake getSnake() {
+        return snake;
+    }
+
+    public Ladder getLadder() {
+        return ladder;
+    }
+
+    //** */
+
+    public void setSnake(Snake snake) {
+    }
 
     //**  */
+
+    
     
 
 }

@@ -101,6 +101,7 @@ public class Main {
         
 
         controller.generateBoard(n, m, s, e);
+        
         reader.nextLine();
         System.out.println("\nThe game will be play only wit 3 players. Just choose your turn :p");
         controller.configPlayers();
@@ -133,7 +134,7 @@ public class Main {
             reader.nextLine();
             GameMenu();
         }else if(controller.hasGameFinished()==true){
-            System.out.println("FINISHED, CONGRATS "+controller.winners());
+            System.out.println("\n  FINISHED, CONGRATS "+controller.winners());
             return;
         } 
             
