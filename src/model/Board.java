@@ -1,17 +1,46 @@
-package model; 
+package model;
+import java.util.Random;
+import java.util.Timer;
 
 public class Board {
-
+	
 	private Node head; 
 	private Node tail; 
-
+	
+	
 	private int rows;
 	private int cols;
+	private Random dice;
+	private Random random;
+	
+	int position1=0;
+	int position2=0;
+	int position3=0;
+	
+	double s1 = 0;
+	double s2 = 0;
+	double s3 = 0;
+
+	private Snake snake;
+	private Ladder ladder; 
+	
+	private Player p1=new Player("*");
+	private Player p2=new Player("+");
+	private Player p3=new Player("?");
 
 
-	public Board (int rows, int cols ) {
+	private double seconds;
+    private boolean flag;
+    private Thread timeKeeper; 
+
+	public Board(int rows, int cols) {
+		this.head = null;
+		this.tail = null;
 		this.rows = rows;
 		this.cols = cols;
+		this.dice = new Random();
+		this.random=new Random();
+		
 		
 	}
 	
@@ -47,134 +76,383 @@ public class Board {
 	}
 
 	public void addNodes(int totalNodes, int counter){
-        
-        Node node = new Node(counter);
+		
+		Node node = new Node(counter);
 
-        if(counter <= totalNodes){
-            addLast(node);
-            addNodes(totalNodes, counter+1);
+		if(counter <= totalNodes){
+			addLast(node);
+			addNodes(totalNodes, counter+1);
 
-        }
+		}
 
-    }
+	}
 
-	public String printBoard() {
-		return printBoard(this.tail, this.rows, this.cols, 0);
+	//**    */
+	
+	public void printBoard() {
+		printBoard(this.tail, this.rows, this.cols, 0);
 	}
 	
-	private String printBoard(Node current, int rows, int cols, int count) {
+	
+
+	private void printBoard(Node current, int rows, int cols, int count) {
+		int colCount = 0;
+
 		if (current == null || count == rows * cols) {
 			System.out.println(); // Agregar salto de línea al final
-			return null;
+			return;
 		}
 	
-		
 		int position = (rows * cols) - count - 1; // Calcular la posición del nodo actual
 	
 		if ((position + 1) % cols == 0) {
 			System.out.print("\n"); // Agregar salto de línea al inicio de cada fila
+			colCount = 0;
+		} 
+	
+		if (colCount % 2 != 0) {
+			reverse(current, cols, 1);
+		} else {
+			System.out.print(" [ " + current.getValue() + printp(current) + "      ] ");
+			
+			
+			colCount++;
+		}
+		
+		printBoard(current.getPrevious(), rows, cols, count + 1); // Avanzar al nodo anterior
+	}
+
+	//**  */
+
+	public void printBoardSnakeAndLadder() {
+		printBoardSnakeAndLadder(this.tail, this.rows, this.cols, 0);
+	}
+
+	private void printBoardSnakeAndLadder (Node current, int rows, int cols, int count) {
+		
+		int colCount = 0;
+
+		if (current == null || count == rows * cols) {
+			System.out.println(); // Agregar salto de línea al final
+			return;
+		}
+	
+		int position = (rows * cols) - count - 1; // Calcular la posición del nodo actual
+	
+		if ((position + 1) % cols == 0) {
+			System.out.print("\n"); // Agregar salto de línea al inicio de cada fila
+			colCount = 0;
+		} 
+	
+		if (colCount % 2 != 0) {
+			reverse(current, cols, 1);
+		} else {
+			System.out.print(" [ " + printSnL(current) + "      ] ");
+			
+			
+			colCount++;
+		}
+		
+		printBoard(current.getPrevious(), rows, cols, count + 1); // Avanzar al nodo anterior
+	}
+	
+	//**  */
+
+	private void reverse(Node current, int cols, int count) {
+		if (current == null || count > cols) {
+			return;
+		}
+		reverse(current.getPrevious(), cols, count + 1);
+		System.out.print("[ " + current.getValue() + " ]");
+	}
+
+
+
+	//** */
+
+	public String printp(Node current){
+		String msj="";
+		
+		if(current.getValue()==p1.getValueP()){
+			msj += p1.getToken();
+		}
+		if(current.getValue()==p2.getValueP()){
+			msj += p2.getToken();
+		}
+		if(current.getValue()==p3.getValueP()){
+			msj += p3.getToken();
+		}
+		return msj;
+	}
+
+	//**  */
+
+	public String printSnL(Node current){
+		
+		String msj = "";
+
+		if(snake != null && current.getValue() == snake.getHead()){
+			msj += snake.getId();
+		}
+		if(snake != null && current.getValue() == snake.getTail()){
+			msj += snake.getId();
+		}
+		if(ladder != null && current.getValue() == ladder.getHead()){
+			msj += ladder.getId();
+		}
+		if(ladder != null && current.getValue() == ladder.getTail()){
+			msj += ladder.getId();
+		}
+
+		return msj;
+	}
+
+
+
+	//**  */
+
+
+	public void configPlayers(Node current){
+
+		current=head;
+		p1.setValue(current.getValue());
+		p2.setValue(current.getValue());
+		p3.setValue(current.getValue());
+		p1.setNum(1);
+		p2.setNum(2);
+		p3.setNum(3);
+		
+
+	}
+	
+	public void move(int turno){
+		if(turno==1){
+			int dado=rollDice();
+			System.out.println("Niceeeee :D, You got a "+dado);
+			int posicion=p1.getValueP();
+			int newPosition=posicion+dado;
+			if(newPosition>rows*cols){
+				System.out.println("Sorry, you got a number superior to the limit");
+				return;
+			}else if(newPosition==rows*cols){
+				order(p1);
+				p1.setValue(newPosition);
+			}else{
+			p1.setValue(newPosition);
+			}
+		}else if(turno==2){
+			int dado=rollDice();
+			System.out.println("Niceeeee :D, You got a "+dado);
+			int posicion=p2.getValueP();
+			int newPosition=posicion+dado;
+			if(newPosition>rows*cols){
+				System.out.println("Sorry, you got a number superior to the limit");
+				return;
+			}else if(newPosition==rows*cols){
+				order(p2);
+				p2.setValue(newPosition);
+			}else{
+			p2.setValue(newPosition);
+			}
+		}else if(turno==3){
+			int dado=rollDice();
+			System.out.println("Niceeee :D, You got a "+dado);
+			int posicion=p3.getValueP();
+			int newPosition=posicion+dado;
+			if(newPosition>rows*cols){
+				System.out.println("Sorry, you got a number superior to the limit");
+				return;
+			}else if(newPosition==rows*cols){
+				order(p3);
+				p3.setValue(newPosition);
+			}else{
+			p3.setValue(newPosition);
+			}
+
 			
 		}
-		System.out.print("[ " + current.getValue() + " ] ");
+	}
+
 	
-		return printBoard(current.getPrevious(), rows, cols, count + 1); // Avanzar al nodo anterior
+	public int rollDice() {
+		int dado=dice.nextInt(6) + 1;
+        return dado;
+    }
+
+	
+	//*  */
+	public void addSnakes(int numSnakes) {
+		if (numSnakes == 0) {
+			return;
+		}
+		
+		addSnake(head);
+		
+		addSnakes(numSnakes - 1);
+	}
+
+	private void addSnake(Node current) {
+		
+		if (current == null) {
+			return;
+		}
+		
+		
+		Snake newSnake = new Snake(0, 0);
+		newSnake.setHead(random().getHeadRandom());
+		newSnake.setTail(random().getTailRandom());
+		
+		if (newSnake.getHead() == current.getValue()) {
+			newSnake.setHeadNode(current);
+		}
+		
+		if (newSnake.getTail() == current.getValue()) {
+			newSnake.setTailNode(current);
+		}
+		
+		addSnake(current.getNext());
 	}
 	
+
+	//**  */
+
+	public void addLadders(int ladder) {
+		Ladder newLadder = new Ladder(0, 0);
+		newLadder.setHead(ladder);
+		addLadders(newLadder, head);
+	}
+	
+	private void addLadders(Ladder ladder, Node current) {
+		if (ladder == null || current == null) {
+			return; // do nothing if either snake or current is null
+		}
+		if (ladder.getHead() == 0) {
+			ladder.setHead(current.getValue()); // set the head of the snake to current if it is not already set
+			return;
+		}
+		if (ladder.getHead() == current.getValue()) {
+			ladder.setHead(current.getValue());
+			return;
+		}
+		addLadders(ladder, current.getNext());
+	}
+
+	//**  */
+
+	public Randoms random(){
+
+		Randoms rand=new Randoms(0,0);
+		int limit=rows*cols;
+
+		int headrandom = random.nextInt(limit);
+		int tailrandom = random.nextInt(limit);
+		
+		if(tailrandom>=headrandom){
+			random();
+		}else if(tailrandom==0){
+			random();
+		}else if(headrandom==tailrandom){
+			random();
+		}else if(headrandom+tailrandom>(limit*0.4)){
+			random();
+		}
+		else{
+			rand=new Randoms(headrandom,tailrandom);
+		
+		}
+		return rand;
+		
+		
+	}
+	public boolean gameFinished(){
+		boolean endgame=false;
+		if(p1.getValueP()==rows*cols&&p2.getValueP()==rows*cols&&p3.getValueP()==rows*cols){
+			endgame=true;
+		}
+		return endgame;
+	}
+	
+	public void order(Player win){
+		
+		if (position1==0){
+			position1=win.getNum();
+			win.setScore(scoreFromTime());
+			s1 = win.getScore();
+
+
+		}else if(position2==0){
+			position2=win.getNum();
+			win.setScore(scoreFromTime());
+			s2 = win.getScore();
+
+		}else if(position3==0){
+			position3=win.getNum();
+			win.setScore(scoreFromTime());
+			s3 = win.getScore();
+
+		}else{return;}
+	}
+
+	public String returnPositions(){
+
+		int[] posiciones=new int[3];
+
+		posiciones[0]=position1;
+		posiciones[1]=position2;
+		posiciones[2]=position3;
+
+		double[] score = new double[3];
+		score[0] = s1;  
+		score[1] = s2;
+		score[2] = s3;
+
+		String msj="The winners in order areee :\n\n First place, Player: "+ posiciones[0]+ ", with a score of " + score[0] +"\n Second place, player:  "+posiciones[1]+ ", with a score of " + score[1] + "\n Third place, player " +posiciones[2] +", with a score of " + score[2];
+		return msj;
+	}
 	
 
-	public Node search(int goal){
-		return search(goal, this.head); 
-	}
+	//** */
 
-	private Node search(int goal, Node current){
-		// Caso base 
-		if(current == null){
-			return null; 
-		}
+	//** Contador de tiempo*/
+    public void clockTime(){
+		
 
-		// caso borde 
-		if(goal == head.getValue() && current.equals(this.head)){
-			return this.head; 
-		}
+        this.seconds = 600;
+        flag = true;
+        
+        timeKeeper = new Thread ( ( ) -> { //Mantiene el hilo, proceso ligero
 
-		if(goal == tail.getValue() && current.equals(this.tail)){
-			return this.tail; 
-		}
-		if(goal == current.getValue()){
-			return current; 
-		}
-		if(current == this.tail && goal != this.tail.getValue()){
-			return null; 
-		}
+            while (flag) {
+                try {
+                    Thread.sleep(10); // contará más lento el tiempo
+                    seconds = 0.10;
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); //cuando se cumpla, será la bandera que detiene
+        
+                }
+            }
 
-		return search(goal, current.getNext()); 
-	}
+        } ) ;
 
-	// triger de la función
-	public void delete(int goal){
-		delete(goal, head);
-	}
+        timeKeeper.start(); // clockTime
 
-	private void delete(int goal, Node current){
-		//Casos base
-		if(current == null){
-			return;
-		}
-		//Caso borde: eliminar la cabeza
-		if(head.getValue() == goal){
-			head = current.getNext();
-			return;
-		}
-		// Segundo caso borde elimina la cola
-		if(tail.getValue() == goal && tail == current){
-			current.getPrevious().setNext(null); //  previous.setNext(null);
-			tail = current.getPrevious(); // previous;
-			return;
-		}
-		// Caso intermedio 
-		if(current.getValue() == goal){
-			current.getPrevious().setNext(current.getNext()); // previous.setNext(current.getNext());
-			return;
-		}
-		//Llamado recursivo
-		delete(goal, current.getNext());
-		//      ^       ^           ^
-		//      |       |           | 
-		// objetivo  previous    current
-	}
-
-	public void addSnake(Node node, int head, int tail, int id) {
-        if (node == null) {
-            return;
-        }
-        if (node.getValue() == head) {
-            Node endNode = getNode(head + 1, node.getNext(), tail);
-            node.setNext(endNode);
-        } else {
-            addSnake(node.getNext(), head, tail, id);
-        }
     }
-  
-	public void addLadder(Node node, int head, int tail, int id) {
-        if (node == null) {
-            return;
-        }
-        if (node.getValue() == head) {
-            Node endNode = getNode(head + 1, node.getNext(), tail);
-            node.setNext(endNode);
-        } else {
-            addSnake(node.getNext(), head, tail, id);
-        }
+
+    //** Calcular score a partir del tiempo */
+
+    public double scoreFromTime(){
+
+        double a = (600 - seconds ) / 6;
+        return a; 
+    }  
+
+    //**  */
+
+    public void finishTime(){
+        flag = false;
+        timeKeeper.interrupt();
     }
-	private Node getNode(int current, Node node, int target) {
-        if (node == null) {
-            return null;
-        }
-        if (current == target) {
-            return node;
-        }
-        return getNode(current + 1, node.getNext(), target);
-    }
+
 	//* */
 
 	//*Getters and Setters */
@@ -185,7 +463,7 @@ public class Board {
 
 	public void setRows(int rows) {
 		this.rows = rows;
-	}
+	}	
 
 	public int getCols() {
 		return cols;
@@ -194,6 +472,41 @@ public class Board {
 	public void setCols(int cols) {
 		this.cols = cols;
 	}
+
+	public Node getHead() {
+		return head;
+	}
+
+	public void setHead(Node head) {
+		this.head = head;
+	}
+
+	public Node getTail() {
+		return tail;
+	}
+
+	public void setTail(Node tail) {
+		this.tail = tail;
+	}
+
+    public int getSize() {
+        return rows*cols;
+    }
+	public Player getPlayer1(){
+		return p1;
+	}
+	public Player getPlayer2(){
+		return p2;
+	}
+	public Player getPlayer3(){
+		return p3;
+	}
+
+	
+	
+
+
+
 
 
 }

@@ -1,32 +1,48 @@
 package model;
+
 import java.util.Random;
-import java.util.Scanner;
+
+
+
 
 public class GameController{
 
-    private Scanner scanner;
     private Board board;
- 
+    private int currentTurn;
+    boolean gameOver;
+    public static Random random = new Random();
 
-    public static Random random = new Random();     
+    
+
+
+
 
     public GameController(){
-        scanner = new Scanner(System.in);
+    
         board = new Board(0, 0);
+         
 
 
     }
 
-    public String showBoard(){
-        return board.printBoard();
-    }
-
-    public void generateBoard(int rows, int cols) {
+    public void generateBoard(int rows, int cols, int snake, int ladder) {
         this.board = new Board(rows, cols);
         addNodes(1, rows*cols);
         
-    
+        board.addLadders(ladder);
+        configPlayers();
     }
+
+    public void showBoard(){
+        board.printBoard();
+        
+    }
+
+    public void showSnakeAndLadder(){
+        board.printBoardSnakeAndLadder();
+    }
+
+
 
     public void addNodes(int current, int limit){
 
@@ -40,12 +56,63 @@ public class GameController{
 
             board.addNodes(totalNodes, counter); 
 
-        }
-              
+        }              
+    }
 
+    public int getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void updateCurrentTurn() {
+        if (currentTurn == 3) {
+            this.currentTurn = 1;
+        } else {
+            this.currentTurn++;
+        }
+    }
+    public void move(){
+        board.move(currentTurn);
+        updateCurrentTurn();
+    }
+
+    public void configPlayers(){
+        board.configPlayers(board.getHead());
+    }
+
+    //** */
+
+    public void clockTime(){
+        board.clockTime();
+    }
+
+    public double scoreFromTime(){
+        return board.scoreFromTime();
+    }
+
+    public void finishTime(){
+        board.finishTime();
     }
 
 
-    
+    //** */
+    public boolean hasGameFinished(){
+        return board.gameFinished();
+    }
+    public String winners(){
+    return board.returnPositions();
+    }
+    public void position(){
+        
+    }
+
+    //** */
+
+
+
+
+
+
+
+
 
 }
